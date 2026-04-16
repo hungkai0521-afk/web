@@ -252,8 +252,14 @@
         }
         .weather-day-name {
             font-size: 10px; font-weight: 700;
-            color: var(--text-sub); margin-bottom: 5px;
+            color: var(--text-sub); margin-bottom: 1px;
         }
+        .weather-day-date {
+            font-size: 10px; font-weight: 500;
+            color: var(--text-muted); margin-bottom: 4px;
+        }
+        .trip-day .weather-day-date { color: #3b82f6; }
+        .trip-day-warn .weather-day-date { color: #d97706; }
         .trip-day .weather-day-name { color: #1d4ed8; }
         .trip-day-warn .weather-day-name { color: #b45309; }
         .weather-day-icon { width: 28px; height: 28px; margin: 0 auto 4px; display: block; }
@@ -1032,6 +1038,7 @@ function renderDays(daily) {
     daily.time.forEach((dateStr, i) => {
         const d    = new Date(dateStr + 'T00:00:00');
         const wday = WEEKDAYS[d.getDay()];
+        const mmdd = `${d.getMonth()+1}/${d.getDate()}`;
         const info = wmoInfo(daily.weather_code[i]);
         const max  = Math.round(daily.temperature_2m_max[i]);
         const min  = Math.round(daily.temperature_2m_min[i]);
@@ -1044,6 +1051,7 @@ function renderDays(daily) {
         container.innerHTML += `
             <div class="weather-day ${cls}">
                 <div class="weather-day-name">${wday}</div>
+                <div class="weather-day-date">${mmdd}</div>
                 ${trip ? `<span class="trip-badge">${trip.label}</span>` : ''}
                 <div class="weather-day-icon">${iconSVG(info.key, 28)}</div>
                 <div class="weather-day-rain" style="color:${rainColor}">${rain}%</div>
